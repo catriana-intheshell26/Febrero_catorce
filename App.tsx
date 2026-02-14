@@ -1,12 +1,21 @@
-
 import React, { useEffect, useState, useRef } from 'react';
-import { MILESTONES, AUDIO_URL, INTRO_GALLERY } from './constants';
+import { MILESTONES, AUDIO_URL, INTRO_GALLERY, YOUTUBE_ID } from './constants';
 import OceanWaves from './components/OceanWaves';
 import HandwrittenNote from './components/HandwrittenNote';
 import AnimatedLyrics from './components/AnimatedLyrics';
 import EncounterMap from './components/EncounterMap';
 import AudioController from './components/AudioController';
 import SyncedLyrics from './components/SyncedLyrics';
+
+// Imágenes específicas de la carpeta public para el carrusel del libro
+const BOOK_GALLERY = [
+  'public/1.jpeg',
+  'public/3.jpeg',
+  '/4.jpeg',
+  '/12.jpeg',
+  '/15.jpeg'
+];
+
 
 const ButterflyIcon = ({ color, className, onClick }: { color: string, className?: string, onClick?: () => void }) => (
   <svg 
@@ -29,9 +38,9 @@ const App: React.FC = () => {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
+  // EFECTO 1: Manejo del Scroll (Independiente)
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -50,6 +59,18 @@ const App: React.FC = () => {
     return () => container?.removeEventListener('scroll', handleScroll);
   }, [activeIndex]);
 
+  // EFECTO 2: Carrusel Automático del Libro (Independiente)
+  useEffect(() => {
+    let interval: any;
+    if (bookOpened) {
+      interval = setInterval(() => {
+        setGalleryIndex((prev) => (prev + 1) % BOOK_GALLERY.length);
+      }, 4000); // Cambia cada 4 segundos
+    }
+    return () => clearInterval(interval);
+  }, [bookOpened]);
+
+  // EFECTO 3: Control de tiempo de Audio
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -71,29 +92,18 @@ const App: React.FC = () => {
   };
 
   const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(e => {
-        console.error("Audio playback blocked", e);
-        // Intentamos forzar el estado para que la UI responda
-        setIsPlaying(true);
-      });
-    }
+    // Si usas YouTube, isPlaying controlará la visibilidad del video al final
+    setIsPlaying(!isPlaying);
   };
 
   const handleButterflyClick = () => {
     setBookOpened(true);
-    if (!isPlaying) togglePlay();
+    if (!isPlaying) setIsPlaying(true);
   };
 
   const nextGalleryPhoto = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setGalleryIndex((prev) => (prev + 1) % INTRO_GALLERY.length);
+    setGalleryIndex((prev) => (prev + 1) % BOOK_GALLERY.length);
   };
 
   const scrollToSection = (index: number) => {
@@ -106,7 +116,6 @@ const App: React.FC = () => {
   };
 
   const currentTheme = MILESTONES[activeIndex]?.theme || MILESTONES[0].theme;
-
   return (
     <div 
       ref={containerRef}
@@ -240,7 +249,7 @@ const App: React.FC = () => {
                         <div className="relative w-full h-full max-h-[450px] aspect-[4/5] flex items-center justify-center overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 rotate-[-1.5deg] transition-all duration-700 group-hover/photo:rotate-0 group-hover/photo:scale-[1.03] bg-white border border-black/5">
                           <img 
                             key={galleryIndex}
-                            src={INTRO_GALLERY[galleryIndex]} 
+                            src={BOOK_GALLERY[galleryIndex]} 
                             className="w-full h-full object-cover rounded-sm animate-photo-reveal" 
                             alt="Nuestra Historia" 
                           />
@@ -289,179 +298,179 @@ const App: React.FC = () => {
                           </p>
                         </div>
                         
-                        <div className="animate-bounce-slow flex justify-center md:justify-start">
-                          <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                          </svg>
+                          <div className="animate-bounce-slow flex justify-center md:justify-start">
+                            <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
+                      
+                      {/* Sombra del lomo central */}
+                      <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-black/20 via-black/5 to-transparent pointer-events-none"></div>
                     </div>
-                    
-                    {/* Sombra del lomo central */}
-                    <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-black/20 via-black/5 to-transparent pointer-events-none"></div>
                   </div>
                 </div>
-              </div>
-            ) : isMap ? (
-              <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center page-content z-10">
-                <div className="space-y-8">
-                  <div className="space-y-2">
-                    <span className="font-bold uppercase tracking-[0.5em] text-xs opacity-60" style={{ color: theme.accent }}>Etapa II: {m.stage}</span>
-                    <h2 className="font-serif text-5xl md:text-7xl">{m.title.split(' ')[0]} <span style={{ color: theme.accent }}>{m.title.split(' ').slice(1).join(' ')}</span></h2>
-                  </div>
-                  <p className="text-xl text-gray-700 leading-relaxed font-light italic bg-white/50 backdrop-blur-md p-6 rounded-lg shadow-sm border border-white/40 transition-all hover:bg-white/70">
-                    "{m.description}"
-                  </p>
-                  <div className="flex items-center gap-6">
-                      <div className="w-16 h-[1px]" style={{ backgroundColor: theme.accent }}></div>
-                      <p className="font-handwriting text-3xl" style={{ color: theme.accent }}>El viaje floreció aquí</p>
-                  </div>
-                </div>
-                <EncounterMap isActive={activeIndex === 1} photoUrl={m.imageUrl} />
-                <div className="page-shadow"></div>
-              </div>
-            ) : isFinal ? (
-              <div className="max-w-2xl space-y-12 z-10 page-content text-center">
-                <div className="space-y-4">
-                  <span className="text-[14px] uppercase tracking-[0.6em] opacity-90" style={{ color: theme.accent }}>Que suerte la mía de encontrarte a tí.</span>
-                  <h2 className="font-serif text-7xl md:text-[10rem] italic" style={{ color: theme.text }}>
-                    Eres mi <span style={{ color: theme.accent }}>Vida</span>
-                  </h2>
-                </div>
-                <p className="font-handwriting text-2xl md:text-5xl leading-relaxed max-w-3xl mx-auto" style={{ color: theme.text }}>
-                  {m.description}
-                </p>
-                <div className="relative py-12">
-                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                      <span className="text-[15rem] font-serif" style={{ color: theme.accent }}>♥</span>
+              ) : isMap ? (
+                <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center page-content z-10">
+                  <div className="space-y-8">
+                    <div className="space-y-2">
+                      <span className="font-bold uppercase tracking-[0.5em] text-xs opacity-60" style={{ color: theme.accent }}>Etapa II: {m.stage}</span>
+                      <h2 className="font-serif text-5xl md:text-7xl">{m.title.split(' ')[0]} <span style={{ color: theme.accent }}>{m.title.split(' ').slice(1).join(' ')}</span></h2>
                     </div>
-                    {!isPlaying && <AnimatedLyrics text={m.phrase} color={theme.accent} />}
-                </div>
-                <button 
-                  onClick={() => scrollToSection(0)}
-                  className="group relative px-16 py-6 overflow-hidden rounded-full border transition-all shadow-2xl active:scale-95"
-                  style={{ borderColor: theme.accent }}
-                >
-                  <span className="relative z-10 transition-colors uppercase text-xs tracking-[0.4em] font-black group-hover:text-white" style={{ color: theme.accent }}>Volver al Primer Puerto</span>
-                  <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-700" style={{ backgroundColor: theme.accent }}></div>
-                </button>
-                <div className="page-shadow"></div>
-              </div>
-            ) : (
-              <div className={`max-w-6xl w-full flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-16 items-center page-content z-10`}>
-                <div className="w-full md:w-1/2 relative group">
-                    <div className="bg-white p-5 shadow-2xl rotate-1 transform group-hover:rotate-0 transition-transform duration-700 rounded-sm hover:scale-[1.03]">
-                      <img src={m.imageUrl} className="w-full h-[350px] md:h-[480px] object-cover rounded-sm" alt={m.title} />
-                      <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-48 h-12 bg-white/70 backdrop-blur-md rotate-[-1deg] border border-black/5 flex items-center justify-center shadow-sm">
-                      </div>
-                    </div>
-                </div>
-                <div className="w-full md:w-1/2 space-y-6 p-10 border-l-4 bg-white/20 backdrop-blur-sm shadow-sm rounded-r-xl transition-all hover:bg-white/30" style={{ borderLeftColor: theme.accent }}>
-                    <div className="flex items-center gap-4">
-                      <span className="text-[10px] font-black tracking-[0.4em] uppercase opacity-70" style={{ color: theme.accent }}>Etapa {idx + 1}: {m.stage}</span>
-                      <div className="flex-1 h-px bg-black/5"></div>
-                    </div>
-                    <h2 className="font-serif text-5xl md:text-6xl" style={{ color: theme.text }}>{m.title}</h2>
-                    <p className="font-handwriting text-3xl leading-snug text-gray-700 opacity-90">
-                      {m.description}
+                    <p className="text-xl text-gray-700 leading-relaxed font-light italic bg-white/50 backdrop-blur-md p-6 rounded-lg shadow-sm border border-white/40 transition-all hover:bg-white/70">
+                      "{m.description}"
                     </p>
-                    {!isPlaying && (
-                      <div className="pt-10">
-                        <AnimatedLyrics text={m.phrase} color={theme.accent} />
-                      </div>
-                    )}
+                    <div className="flex items-center gap-6">
+                        <div className="w-16 h-[1px]" style={{ backgroundColor: theme.accent }}></div>
+                        <p className="font-handwriting text-3xl" style={{ color: theme.accent }}>El viaje floreció aquí</p>
+                    </div>
+                  </div>
+                  <EncounterMap isActive={activeIndex === 1} photoUrl={m.imageUrl} />
+                  <div className="page-shadow"></div>
                 </div>
-                <div className="page-shadow"></div>
-              </div>
-            )}
-          </section>
-        )
-      })}
+              ) : isFinal ? (
+                <div className="max-w-2xl space-y-12 z-10 page-content text-center">
+                  <div className="space-y-4">
+                    <span className="text-[14px] uppercase tracking-[0.6em] opacity-90" style={{ color: theme.accent }}>Que suerte la mía de encontrarte a tí.</span>
+                    <h2 className="font-serif text-7xl md:text-[10rem] italic" style={{ color: theme.text }}>
+                      Eres mi <span style={{ color: theme.accent }}>Vida</span>
+                    </h2>
+                  </div>
+                  <p className="font-handwriting text-2xl md:text-5xl leading-relaxed max-w-3xl mx-auto" style={{ color: theme.text }}>
+                    {m.description}
+                  </p>
+                  <div className="relative py-12">
+                      <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                        <span className="text-[15rem] font-serif" style={{ color: theme.accent }}>♥</span>
+                      </div>
+                      {!isPlaying && <AnimatedLyrics text={m.phrase} color={theme.accent} />}
+                  </div>
+                  <button 
+                    onClick={() => scrollToSection(0)}
+                    className="group relative px-16 py-6 overflow-hidden rounded-full border transition-all shadow-2xl active:scale-95"
+                    style={{ borderColor: theme.accent }}
+                  >
+                    <span className="relative z-10 transition-colors uppercase text-xs tracking-[0.4em] font-black group-hover:text-white" style={{ color: theme.accent }}>Volver al Primer Puerto</span>
+                    <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-700" style={{ backgroundColor: theme.accent }}></div>
+                  </button>
+                  <div className="page-shadow"></div>
+                </div>
+              ) : (
+                <div className={`max-w-6xl w-full flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-16 items-center page-content z-10`}>
+                  <div className="w-full md:w-1/2 relative group">
+                      <div className="bg-white p-5 shadow-2xl rotate-1 transform group-hover:rotate-0 transition-transform duration-700 rounded-sm hover:scale-[1.03]">
+                        <img src={m.imageUrl} className="w-full h-[350px] md:h-[480px] object-cover rounded-sm" alt={m.title} />
+                        <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-48 h-12 bg-white/70 backdrop-blur-md rotate-[-1deg] border border-black/5 flex items-center justify-center shadow-sm">
+                        </div>
+                      </div>
+                  </div>
+                  <div className="w-full md:w-1/2 space-y-6 p-10 border-l-4 bg-white/20 backdrop-blur-sm shadow-sm rounded-r-xl transition-all hover:bg-white/30" style={{ borderLeftColor: theme.accent }}>
+                      <div className="flex items-center gap-4">
+                        <span className="text-[10px] font-black tracking-[0.4em] uppercase opacity-70" style={{ color: theme.accent }}>Etapa {idx + 1}: {m.stage}</span>
+                        <div className="flex-1 h-px bg-black/5"></div>
+                      </div>
+                      <h2 className="font-serif text-5xl md:text-6xl" style={{ color: theme.text }}>{m.title}</h2>
+                      <p className="font-handwriting text-3xl leading-snug text-gray-700 opacity-90">
+                        {m.description}
+                      </p>
+                      {!isPlaying && (
+                        <div className="pt-10">
+                          <AnimatedLyrics text={m.phrase} color={theme.accent} />
+                        </div>
+                      )}
+                  </div>
+                  <div className="page-shadow"></div>
+                </div>
+              )}
+            </section>
+          )
+        })}
 
-      <style>{`
-        ::-webkit-scrollbar { display: none; }
-        .h-screen { 
-          scroll-behavior: smooth;
-          scroll-snap-stop: always;
-        }
-        
-        .page-transition {
-          transform-style: preserve-3d;
-          transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-          transform-origin: center top;
-        }
+        <style>{`
+          ::-webkit-scrollbar { display: none; }
+          .h-screen { 
+            scroll-behavior: smooth;
+            scroll-snap-stop: always;
+          }
+          
+          .page-transition {
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: center top;
+          }
 
-        .page-content {
-          transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease;
-          transform-style: preserve-3d;
-        }
+          .page-content {
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease;
+            transform-style: preserve-3d;
+          }
 
-        .page-hidden { pointer-events: none; }
+          .page-hidden { pointer-events: none; }
 
-        .page-hidden .page-content {
-          transform: rotateX(-10deg) translateY(30px) scale(0.96);
-          opacity: 0;
-        }
+          .page-hidden .page-content {
+            transform: rotateX(-10deg) translateY(30px) scale(0.96);
+            opacity: 0;
+          }
 
-        .page-active .page-content {
-          transform: rotateX(0deg) translateY(0) scale(1);
-          opacity: 1;
-        }
+          .page-active .page-content {
+            transform: rotateX(0deg) translateY(0) scale(1);
+            opacity: 1;
+          }
 
-        .preserve-3d { transform-style: preserve-3d; }
-        .rotate-y-0 { transform: rotateY(0deg); }
-        .-rotate-y-[125deg] { transform: rotateY(-125deg); }
-        .rotate-y-180 { transform: rotateY(180deg); }
-        .backface-hidden { backface-visibility: hidden; }
+          .preserve-3d { transform-style: preserve-3d; }
+          .rotate-y-0 { transform: rotateY(0deg); }
+          .-rotate-y-[125deg] { transform: rotateY(-125deg); }
+          .rotate-y-180 { transform: rotateY(180deg); }
+          .backface-hidden { backface-visibility: hidden; }
 
-        @keyframes photo-reveal {
-          from { opacity: 0; transform: scale(1.1) rotate(2deg); filter: sepia(1); }
-          to { opacity: 1; transform: scale(1) rotate(0); filter: sepia(0); }
-        }
-        .animate-photo-reveal { animation: photo-reveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+          @keyframes photo-reveal {
+            from { opacity: 0; transform: scale(1.1) rotate(2deg); filter: sepia(1); }
+            to { opacity: 1; transform: scale(1) rotate(0); filter: sepia(0); }
+          }
+          .animate-photo-reveal { animation: photo-reveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
 
-        @keyframes butterfly-1 {
-          0% { transform: rotate(-15deg) scale(1); }
-          50% { transform: rotate(-30deg) scale(1.15); filter: brightness(1.2); }
-          100% { transform: rotate(-15deg) scale(1); }
-        }
-        @keyframes butterfly-2 {
-          0% { transform: rotate(15deg) scale(1); }
-          50% { transform: rotate(30deg) scale(1.25); filter: brightness(1.2); }
-          100% { transform: rotate(15deg) scale(1); }
-        }
-        .animate-butterfly-1 { animation: butterfly-1 3s ease-in-out infinite; }
-        .animate-butterfly-2 { animation: butterfly-2 3.5s ease-in-out infinite; }
+          @keyframes butterfly-1 {
+            0% { transform: rotate(-15deg) scale(1); }
+            50% { transform: rotate(-30deg) scale(1.15); filter: brightness(1.2); }
+            100% { transform: rotate(-15deg) scale(1); }
+          }
+          @keyframes butterfly-2 {
+            0% { transform: rotate(15deg) scale(1); }
+            50% { transform: rotate(30deg) scale(1.25); filter: brightness(1.2); }
+            100% { transform: rotate(15deg) scale(1); }
+          }
+          .animate-butterfly-1 { animation: butterfly-1 3s ease-in-out infinite; }
+          .animate-butterfly-2 { animation: butterfly-2 3.5s ease-in-out infinite; }
 
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(10px); }
-        }
-        .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+          @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+          }
+          .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
 
-        .page-shadow {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 80px;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 1.2s ease;
-        }
+          .page-shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+          }
 
-        .page-active .page-shadow { opacity: 1; }
+          .page-active .page-shadow { opacity: 1; }
 
-        .perspective-container { perspective: 2500px; }
+          .perspective-container { perspective: 2500px; }
 
-        /* Custom ease for the book opening */
-        .cubic-bezier(0.645, 0.045, 0.355, 1) {
-          transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-      `}</style>
-    </div>
-  );
-};
+          /* Custom ease for the book opening */
+          .cubic-bezier(0.645, 0.045, 0.355, 1) {
+            transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+          }
+        `}</style>
+      </div>
+    );
+  };
 
-export default App;
+  export default App;
