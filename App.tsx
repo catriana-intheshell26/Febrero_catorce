@@ -1,12 +1,21 @@
-
 import React, { useEffect, useState, useRef } from 'react';
-import { MILESTONES, AUDIO_URL, INTRO_GALLERY } from './constants';
+import { MILESTONES, AUDIO_URL, INTRO_GALLERY, YOUTUBE_ID } from './constants';
 import OceanWaves from './components/OceanWaves';
 import HandwrittenNote from './components/HandwrittenNote';
 import AnimatedLyrics from './components/AnimatedLyrics';
 import EncounterMap from './components/EncounterMap';
 import AudioController from './components/AudioController';
 import SyncedLyrics from './components/SyncedLyrics';
+
+// Imágenes específicas de la carpeta public para el carrusel del libro
+const BOOK_GALLERY = [
+  'public/1.jpeg',
+  'public/3.jpeg',
+  '/4.jpeg',
+  '/12.jpeg',
+  '/15.jpeg'
+];
+
 
 const ButterflyIcon = ({ color, className, onClick }: { color: string, className?: string, onClick?: () => void }) => (
   <svg 
@@ -29,9 +38,9 @@ const App: React.FC = () => {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
+  // EFECTO 1: Manejo del Scroll (Independiente)
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -50,6 +59,18 @@ const App: React.FC = () => {
     return () => container?.removeEventListener('scroll', handleScroll);
   }, [activeIndex]);
 
+  // EFECTO 2: Carrusel Automático del Libro (Independiente)
+  useEffect(() => {
+    let interval: any;
+    if (bookOpened) {
+      interval = setInterval(() => {
+        setGalleryIndex((prev) => (prev + 1) % BOOK_GALLERY.length);
+      }, 4000); // Cambia cada 4 segundos
+    }
+    return () => clearInterval(interval);
+  }, [bookOpened]);
+
+  // EFECTO 3: Control de tiempo de Audio
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -71,29 +92,18 @@ const App: React.FC = () => {
   };
 
   const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(e => {
-        console.error("Audio playback blocked", e);
-        // Intentamos forzar el estado para que la UI responda
-        setIsPlaying(true);
-      });
-    }
+    // Si usas YouTube, isPlaying controlará la visibilidad del video al final
+    setIsPlaying(!isPlaying);
   };
 
   const handleButterflyClick = () => {
     setBookOpened(true);
-    if (!isPlaying) togglePlay();
+    if (!isPlaying) setIsPlaying(true);
   };
 
   const nextGalleryPhoto = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setGalleryIndex((prev) => (prev + 1) % INTRO_GALLERY.length);
+    setGalleryIndex((prev) => (prev + 1) % BOOK_GALLERY.length);
   };
 
   const scrollToSection = (index: number) => {
@@ -106,7 +116,6 @@ const App: React.FC = () => {
   };
 
   const currentTheme = MILESTONES[activeIndex]?.theme || MILESTONES[0].theme;
-
   return (
     <div 
       ref={containerRef}
@@ -240,7 +249,7 @@ const App: React.FC = () => {
                         <div className="relative w-full h-full max-h-[450px] aspect-[4/5] flex items-center justify-center overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 rotate-[-1.5deg] transition-all duration-700 group-hover/photo:rotate-0 group-hover/photo:scale-[1.03] bg-white border border-black/5">
                           <img 
                             key={galleryIndex}
-                            src={INTRO_GALLERY[galleryIndex]} 
+                            src={BOOK_GALLERY[galleryIndex]} 
                             className="w-full h-full object-cover rounded-sm animate-photo-reveal" 
                             alt="Nuestra Historia" 
                           />
@@ -376,90 +385,90 @@ const App: React.FC = () => {
         )
       })}
 
-      <style>{`
-        ::-webkit-scrollbar { display: none; }
-        .h-screen { 
-          scroll-behavior: smooth;
-          scroll-snap-stop: always;
-        }
-        
-        .page-transition {
-          transform-style: preserve-3d;
-          transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-          transform-origin: center top;
-        }
+        <style>{`
+          ::-webkit-scrollbar { display: none; }
+          .h-screen { 
+            scroll-behavior: smooth;
+            scroll-snap-stop: always;
+          }
+          
+          .page-transition {
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: center top;
+          }
 
-        .page-content {
-          transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease;
-          transform-style: preserve-3d;
-        }
+          .page-content {
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease;
+            transform-style: preserve-3d;
+          }
 
-        .page-hidden { pointer-events: none; }
+          .page-hidden { pointer-events: none; }
 
-        .page-hidden .page-content {
-          transform: rotateX(-10deg) translateY(30px) scale(0.96);
-          opacity: 0;
-        }
+          .page-hidden .page-content {
+            transform: rotateX(-10deg) translateY(30px) scale(0.96);
+            opacity: 0;
+          }
 
-        .page-active .page-content {
-          transform: rotateX(0deg) translateY(0) scale(1);
-          opacity: 1;
-        }
+          .page-active .page-content {
+            transform: rotateX(0deg) translateY(0) scale(1);
+            opacity: 1;
+          }
 
-        .preserve-3d { transform-style: preserve-3d; }
-        .rotate-y-0 { transform: rotateY(0deg); }
-        .-rotate-y-[125deg] { transform: rotateY(-125deg); }
-        .rotate-y-180 { transform: rotateY(180deg); }
-        .backface-hidden { backface-visibility: hidden; }
+          .preserve-3d { transform-style: preserve-3d; }
+          .rotate-y-0 { transform: rotateY(0deg); }
+          .-rotate-y-[125deg] { transform: rotateY(-125deg); }
+          .rotate-y-180 { transform: rotateY(180deg); }
+          .backface-hidden { backface-visibility: hidden; }
 
-        @keyframes photo-reveal {
-          from { opacity: 0; transform: scale(1.1) rotate(2deg); filter: sepia(1); }
-          to { opacity: 1; transform: scale(1) rotate(0); filter: sepia(0); }
-        }
-        .animate-photo-reveal { animation: photo-reveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+          @keyframes photo-reveal {
+            from { opacity: 0; transform: scale(1.1) rotate(2deg); filter: sepia(1); }
+            to { opacity: 1; transform: scale(1) rotate(0); filter: sepia(0); }
+          }
+          .animate-photo-reveal { animation: photo-reveal 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
 
-        @keyframes butterfly-1 {
-          0% { transform: rotate(-15deg) scale(1); }
-          50% { transform: rotate(-30deg) scale(1.15); filter: brightness(1.2); }
-          100% { transform: rotate(-15deg) scale(1); }
-        }
-        @keyframes butterfly-2 {
-          0% { transform: rotate(15deg) scale(1); }
-          50% { transform: rotate(30deg) scale(1.25); filter: brightness(1.2); }
-          100% { transform: rotate(15deg) scale(1); }
-        }
-        .animate-butterfly-1 { animation: butterfly-1 3s ease-in-out infinite; }
-        .animate-butterfly-2 { animation: butterfly-2 3.5s ease-in-out infinite; }
+          @keyframes butterfly-1 {
+            0% { transform: rotate(-15deg) scale(1); }
+            50% { transform: rotate(-30deg) scale(1.15); filter: brightness(1.2); }
+            100% { transform: rotate(-15deg) scale(1); }
+          }
+          @keyframes butterfly-2 {
+            0% { transform: rotate(15deg) scale(1); }
+            50% { transform: rotate(30deg) scale(1.25); filter: brightness(1.2); }
+            100% { transform: rotate(15deg) scale(1); }
+          }
+          .animate-butterfly-1 { animation: butterfly-1 3s ease-in-out infinite; }
+          .animate-butterfly-2 { animation: butterfly-2 3.5s ease-in-out infinite; }
 
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(10px); }
-        }
-        .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
+          @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+          }
+          .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
 
-        .page-shadow {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 80px;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity 1.2s ease;
-        }
+          .page-shadow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+          }
 
-        .page-active .page-shadow { opacity: 1; }
+          .page-active .page-shadow { opacity: 1; }
 
-        .perspective-container { perspective: 2500px; }
+          .perspective-container { perspective: 2500px; }
 
-        /* Custom ease for the book opening */
-        .cubic-bezier(0.645, 0.045, 0.355, 1) {
-          transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
-        }
-      `}</style>
-    </div>
-  );
-};
+          /* Custom ease for the book opening */
+          .cubic-bezier(0.645, 0.045, 0.355, 1) {
+            transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+          }
+        `}</style>
+      </div>
+    );
+  };
 
-export default App;
+  export default App;

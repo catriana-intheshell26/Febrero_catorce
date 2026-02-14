@@ -2,6 +2,7 @@
 import { Milestone, LyricLine } from './types';
 
 export const AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"; 
+export const YOUTUBE_ID = "qctGJg5YGjE";
 
 export const INTRO_GALLERY = [
   'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=800',
