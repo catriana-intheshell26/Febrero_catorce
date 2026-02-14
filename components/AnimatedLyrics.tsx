@@ -27,7 +27,7 @@ const AnimatedLyrics: React.FC<Props> = ({ text, color }) => {
   return (
     <div className="min-h-[80px] flex items-center justify-center">
       <p 
-        className="font-handwriting text-2xl md:text-4xl text-center leading-snug px-4 transition-colors duration-1000"
+        className="font-handwriting text-4xl md:text-4xl text-center leading-snug px-4 transition-colors duration-1000"
         style={{ color: color }}
       >
         {visibleText}

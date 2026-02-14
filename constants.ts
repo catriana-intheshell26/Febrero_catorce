@@ -59,24 +59,24 @@ export const MILESTONES: Milestone[] = [
   {
     id: 'consolidacion',
     stage: 'Consolidación',
-    date: 'Otoño',
-    title: 'Donde Echamos el Ancla',
-    description: 'La madurez de un amor que sabe a tierra húmeda y hojas secas. Nos consolidamos en la calidez de un abrazo que protege del viento.',
+    date: '',
+    title: 'Juntos en cada paso...',
+    description: 'Planear una vida juntos fue el paso más natural. Decidimos unir nuestros manos bajo un mismo cielo y empezamos a soñar en grande.',
     phrase: "And die with a smile...",
     imageUrl: 'https://images.unsplash.com/photo-1494972308845-d171197eaa97?auto=format&fit=crop&q=80&w=800',
     theme: {
-      bg: '#FAF3E0', 
-      accent: '#BC6C25', 
+      bg: '#ece0fa', 
+      accent: '#9643f5', 
       text: '#1A1C1E',
-      wave: '#DDA15E'
+      wave: '#b95edd'
     }
   },
   {
     id: 'presente',
     stage: 'Presente',
     date: 'Invierno',
-    title: 'Nuestra Realidad',
-    description: 'Refugio contra el frío. El presente es esa chimenea encendida mientras afuera el mundo se detiene. Intimidad en blanco y azul.',
+    title: 'Amor hecho Vida',
+    description: 'Lo soñamos, lo planeamos y finalmente llegó. Nuestra hija es el reflejo de nuestro amor. Hoy, ser sus padres es nuestra misión más importante.',
     phrase: "Right next to you...",
     imageUrl: 'https://images.unsplash.com/photo-1511733849282-589d29a6b28a?auto=format&fit=crop&q=80&w=800',
     theme: {
@@ -91,12 +91,12 @@ export const MILESTONES: Milestone[] = [
     stage: 'Futuro',
     date: 'Eternidad',
     title: 'Nuevos Horizontes',
-    description: 'Más allá de las estaciones, queda el océano. Un futuro esmeralda donde siempre serás mi puerto y mi destino final.',
+    description: 'Aquí no termina la historia. Seguimos construyendo nuestro hogar, levantando nuestro negocio y soñando con el día en que digamos "si" frente al altar. Lo mejor está por venir.',
     phrase: "Wherever you go, that's where I'll be.",
     imageUrl: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=800',
     theme: {
-      bg: '#064e3b', 
-      accent: '#52B788', 
+      bg: '#4e0632', 
+      accent: '#b75274', 
       text: '#FDF8F1',
       wave: '#E8F3E8'
     }
