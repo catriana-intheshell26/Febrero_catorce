@@ -49,7 +49,7 @@ export const MILESTONES: Milestone[] = [
     title: 'Navegando Juntos... Sólo ¡Gracias!',
     description: 'Hoy celebro nuestra vida, hoy te doy gracias por todo lo que nos das día a día, no puedo estar más convencido de que mi lugar es a tu lado',
     phrase: "I'd wanna hold you just for a while...",
-    imageUrl: ['11.jpeg', '13.jpeg'],
+    imageUrl: ['./11.jpeg', './13.jpeg'],
     theme: {
       bg: '#FFFDF0', 
       accent: '#D4A017', 
@@ -64,7 +64,7 @@ export const MILESTONES: Milestone[] = [
     title: 'Juntos en cada paso...',
     description: 'Planear una vida juntos fue el paso más natural. Decidimos unir nuestros manos bajo un mismo cielo y empezamos a soñar en grande.',
     phrase: "And die with a smile...",
-    imageUrl: ['8.jpeg', '5.jpeg'],
+    imageUrl: ['./8.jpeg', './5.jpeg'],
     theme: {
       bg: '#ece0fa', 
       accent: '#9643f5', 
@@ -79,7 +79,7 @@ export const MILESTONES: Milestone[] = [
     title: 'Amor hecho Vida',
     description: 'Lo soñamos, lo planeamos y finalmente llegó. Nuestra hija es el reflejo de nuestro amor. Hoy, ser sus padres es nuestra misión más importante.',
     phrase: "Right next to you...",
-    imageUrl: ['14.jpeg','9.jpeg'],
+    imageUrl: ['./14.jpeg','./9.jpeg'],
     theme: {
       bg: '#F0F7FA', 
       accent: '#2A9D8F', 
@@ -94,7 +94,7 @@ export const MILESTONES: Milestone[] = [
     title: 'Nuevos Horizontes',
     description: 'Aquí no termina la historia. Seguimos construyendo nuestro hogar, levantando nuestro negocio y soñando con el día en que digamos "si" frente al altar. Lo mejor está por venir ¡Te amo!',
     phrase: "Wherever you go, that's where I'll be.",
-    imageUrl: '5.jpeg',
+    imageUrl: './5.jpeg',
     theme: {
       bg: '#4e0632', 
       accent: '#b75274', 

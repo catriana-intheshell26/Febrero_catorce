@@ -9,11 +9,11 @@ import SyncedLyrics from './components/SyncedLyrics';
 
 // Selección específica de imágenes de la carpeta public (1, 3, 4, 12, 15)
 const BOOK_GALLERY = [
-  '1.jpeg',
-  '3.jpeg',
-  '4.jpeg',
-  '12.jpeg',
-  '15.jpeg'
+  './1.jpeg',
+  './3.jpeg',
+  './4.jpeg',
+  './12.jpeg',
+  './15.jpeg'
 ];
 
 const ButterflyIcon = ({ color, className, onClick }: { color: string, className?: string, onClick?: () => void }) => (
