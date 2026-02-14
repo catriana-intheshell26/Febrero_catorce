@@ -50,11 +50,11 @@ const SyncedLyrics: React.FC<Props> = ({ currentTime, accentColor }) => {
     <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl px-6 pointer-events-none">
       <div className="bg-white/60 backdrop-blur-md p-6 rounded-2xl border border-white/40 shadow-2xl transform rotate-[-0.5deg] transition-all duration-1000">
         <div className="flex items-center justify-center gap-3 mb-3 opacity-60">
-           <div className="w-1.5 h-1.5 rounded-full animate-ping" style={{ backgroundColor: accentColor }}></div>
-           <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500">Bitácora Sentimental</span>
+            <div className="w-1.5 h-1.5 rounded-full animate-ping" style={{ backgroundColor: accentColor }}></div>
+            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500">Bitácora Sentimental</span>
         </div>
         <p 
-          className="font-handwriting text-2xl md:text-4xl text-center leading-snug transition-colors duration-1000 min-h-[3rem]"
+          className="font-handwriting text-4xl md:text-4xl text-center leading-snug transition-colors duration-1000 min-h-[3rem]"
           style={{ color: accentColor }}
         >
           {visibleText}

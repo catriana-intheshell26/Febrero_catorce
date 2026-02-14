@@ -8,8 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+DE+SAS:wght@100..400&display=swap" rel="stylesheet">    <style>
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +19,11 @@
             background-color: #fdfaf1;
             overflow: hidden; /* Important for the snap scroll container in App.tsx */
         }
-        .font-handwriting { font-family: 'Dancing Script', cursive; }
+        .font-handwriting { font-family: 'Playwrite DE SAS', cursive;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
         .font-serif { font-family: 'Playfair Display', serif; }
 
         @keyframes wave {
@@ -34,11 +37,11 @@
     </style>
 <script type="importmap">
 {
-  "imports": {
+    "imports": {
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4"
-  }
+    }
 }
 </script>
 <link rel="stylesheet" href="/index.css">

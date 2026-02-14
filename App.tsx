@@ -135,10 +135,10 @@ const App: React.FC = () => {
             className="group relative flex items-center justify-center"
           >
             <div className={`w-3 h-3 rounded-full transition-all duration-500 border-2 ${activeIndex === idx ? 'scale-150 shadow-lg' : 'opacity-40 hover:opacity-100'}`}
-                 style={{ 
-                   backgroundColor: activeIndex === idx ? currentTheme.accent : 'transparent',
-                   borderColor: activeIndex === idx ? currentTheme.accent : 'gray'
-                 }}>
+                  style={{ 
+                    backgroundColor: activeIndex === idx ? currentTheme.accent : 'transparent',
+                    borderColor: activeIndex === idx ? currentTheme.accent : 'gray'
+                  }}>
             </div>
             <span className={`absolute left-8 whitespace-nowrap text-[10px] uppercase tracking-[0.3em] font-bold transition-all duration-500 origin-left ${activeIndex === idx ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}`}
                   style={{ color: currentTheme.accent }}>
@@ -190,9 +190,9 @@ const App: React.FC = () => {
                     <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-black/20 to-transparent"></div>
                     
                     <div className="absolute inset-6 border border-[#fdfaf1]/10 rounded-sm flex flex-col items-center justify-center text-center p-8 backface-hidden">
-                       <p className="text-[#fdfaf1]/40 text-[9px] uppercase tracking-[0.5em] mb-6 font-bold animate-pulse">Toca la mariposa para descubrir</p>
-                       
-                       <div className="flex gap-6 md:gap-12 mb-16 relative">
+                        <p className="text-[#fdfaf1]/40 text-[9px] uppercase tracking-[0.5em] mb-6 font-bold animate-pulse">Toca la mariposa para descubrir</p>
+                        
+                        <div className="flex gap-6 md:gap-12 mb-16 relative">
                           <ButterflyIcon 
                             color="#fdfaf1" 
                             className="animate-butterfly-1" 
@@ -206,17 +206,17 @@ const App: React.FC = () => {
                           
                           {/* Efecto de luz central detrás de las mariposas */}
                           <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full -z-10 animate-pulse"></div>
-                       </div>
-                       
-                       <h2 className="font-serif text-5xl md:text-[6rem] text-[#fdfaf1] italic mb-8 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] leading-none select-none">
-                         Our love <br/> 
-                         <span className="text-3xl md:text-5xl opacity-60 tracking-widest block mt-4 font-light uppercase">to</span>
-                         <span className="block mt-4 text-[#fdfaf1]/90">Admire</span>
-                       </h2>
-                       
-                       <div className="w-40 h-[1px] bg-[#fdfaf1]/20 mb-8"></div>
-                       <p className="text-[11px] uppercase tracking-[1em] text-[#fdfaf1]/40 font-black">M M X X I V</p>
-                    </div>
+                        </div>
+                        
+                        <h2 className="font-serif text-5xl md:text-[6rem] text-[#fdfaf1] italic mb-8 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] leading-none select-none">
+                          Our love <br/> 
+                          <span className="text-3xl md:text-5xl opacity-60 tracking-widest block mt-4 font-light uppercase">to</span>
+                          <span className="block mt-4 text-[#fdfaf1]/90">Admire</span>
+                        </h2>
+                        
+                        <div className="w-40 h-[1px] bg-[#fdfaf1]/20 mb-8"></div>
+                        <p className="text-[11px] uppercase tracking-[1em] text-[#fdfaf1]/40 font-black">M M X X I V</p>
+                      </div>
 
                     {/* Reverso de la portada (hoja de cortesía) */}
                     <div className="absolute inset-0 bg-[#f4f1ea] rotate-y-180 backface-hidden flex items-center justify-center p-12 text-center shadow-[inset_0_0_100px_rgba(0,0,0,0.05)] rounded-l-sm">
@@ -237,28 +237,28 @@ const App: React.FC = () => {
                       className="w-full md:w-1/2 p-6 border-b md:border-b-0 md:border-r border-[#dcd0bc] flex items-center justify-center bg-[#fdfaf1]/60 cursor-pointer group/photo relative overflow-hidden"
                       onClick={nextGalleryPhoto}
                     >
-                       <div className="relative w-full h-full max-h-[450px] aspect-[4/5] flex items-center justify-center overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 rotate-[-1.5deg] transition-all duration-700 group-hover/photo:rotate-0 group-hover/photo:scale-[1.03] bg-white border border-black/5">
-                         <img 
-                           key={galleryIndex}
-                           src={INTRO_GALLERY[galleryIndex]} 
-                           className="w-full h-full object-cover rounded-sm animate-photo-reveal" 
-                           alt="Nuestra Historia" 
-                         />
-                         <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-white/20 pointer-events-none"></div>
-                         
+                        <div className="relative w-full h-full max-h-[450px] aspect-[4/5] flex items-center justify-center overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 rotate-[-1.5deg] transition-all duration-700 group-hover/photo:rotate-0 group-hover/photo:scale-[1.03] bg-white border border-black/5">
+                          <img 
+                            key={galleryIndex}
+                            src={INTRO_GALLERY[galleryIndex]} 
+                            className="w-full h-full object-cover rounded-sm animate-photo-reveal" 
+                            alt="Nuestra Historia" 
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-white/20 pointer-events-none"></div>
+                          
                          {/* Banner de interacción */}
-                         <div className="absolute bottom-10 inset-x-0 flex justify-center opacity-0 group-hover/photo:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover/photo:translate-y-0">
-                           <div className="bg-black/70 backdrop-blur-md px-4 py-2 rounded-full text-[10px] text-white uppercase tracking-widest flex items-center gap-3">
-                             <span>Toca para ver otra foto</span>
-                             <div className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping"></div>
-                           </div>
-                         </div>
-                       </div>
+                          <div className="absolute bottom-10 inset-x-0 flex justify-center opacity-0 group-hover/photo:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover/photo:translate-y-0">
+                            <div className="bg-black/70 backdrop-blur-md px-4 py-2 rounded-full text-[10px] text-white uppercase tracking-widest flex items-center gap-3">
+                              <span>Toca para ver otra foto</span>
+                              <div className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping"></div>
+                            </div>
+                          </div>
+                        </div>
                        
                        {/* Decoración: Cinta adhesiva vintage */}
-                       <div className="absolute top-8 left-1/2 -translate-x-1/2 w-28 h-10 bg-white/50 backdrop-blur-sm -rotate-3 z-10 border border-black/5 shadow-sm opacity-80 pointer-events-none"></div>
-                       <div className="absolute bottom-10 right-10 w-20 h-20 border-r border-b border-black/5 rounded-br-3xl pointer-events-none"></div>
-                    </div>
+                        <div className="absolute top-8 left-1/2 -translate-x-1/2 w-28 h-10 bg-white/50 backdrop-blur-sm -rotate-3 z-10 border border-black/5 shadow-sm opacity-80 pointer-events-none"></div>
+                        <div className="absolute bottom-10 right-10 w-20 h-20 border-r border-b border-black/5 rounded-br-3xl pointer-events-none"></div>
+                      </div>
                     
                     {/* TEXTO DE INTRODUCCIÓN */}
                     <div className="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center text-center md:text-left space-y-10">
@@ -273,7 +273,7 @@ const App: React.FC = () => {
                         </h1>
                       </div>
                       
-                      <p className="font-handwriting text-3xl md:text-4xl text-gray-600 leading-relaxed italic relative">
+                      <p className="font-handwriting text-3xl md:text-2xl text-gray-600 leading-relaxed italic relative">
                         <span className="absolute -left-6 top-0 text-6xl text-gray-200 font-serif">"</span>
                         {m.description}
                       </p>
@@ -313,29 +313,29 @@ const App: React.FC = () => {
                     "{m.description}"
                   </p>
                   <div className="flex items-center gap-6">
-                     <div className="w-16 h-[1px]" style={{ backgroundColor: theme.accent }}></div>
-                     <p className="font-handwriting text-3xl" style={{ color: theme.accent }}>El viaje floreció aquí</p>
+                      <div className="w-16 h-[1px]" style={{ backgroundColor: theme.accent }}></div>
+                      <p className="font-handwriting text-3xl" style={{ color: theme.accent }}>El viaje floreció aquí</p>
                   </div>
                 </div>
                 <EncounterMap isActive={activeIndex === 1} photoUrl={m.imageUrl} />
                 <div className="page-shadow"></div>
               </div>
             ) : isFinal ? (
-              <div className="max-w-4xl space-y-12 z-10 page-content text-center">
+              <div className="max-w-2xl space-y-12 z-10 page-content text-center">
                 <div className="space-y-4">
-                  <span className="text-[10px] uppercase tracking-[0.6em] opacity-60" style={{ color: theme.accent }}>El océano que nunca termina</span>
+                  <span className="text-[14px] uppercase tracking-[0.6em] opacity-90" style={{ color: theme.accent }}>Que suerte la mía de encontrarte a tí.</span>
                   <h2 className="font-serif text-7xl md:text-[10rem] italic" style={{ color: theme.text }}>
-                    Eres mi <span style={{ color: theme.accent }}>Mar</span>
+                    Eres mi <span style={{ color: theme.accent }}>Vida</span>
                   </h2>
                 </div>
-                <p className="font-handwriting text-4xl md:text-5xl leading-relaxed max-w-3xl mx-auto" style={{ color: theme.text }}>
+                <p className="font-handwriting text-2xl md:text-5xl leading-relaxed max-w-3xl mx-auto" style={{ color: theme.text }}>
                   {m.description}
                 </p>
                 <div className="relative py-12">
-                   <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
                       <span className="text-[15rem] font-serif" style={{ color: theme.accent }}>♥</span>
-                   </div>
-                   {!isPlaying && <AnimatedLyrics text={m.phrase} color={theme.accent} />}
+                    </div>
+                    {!isPlaying && <AnimatedLyrics text={m.phrase} color={theme.accent} />}
                 </div>
                 <button 
                   onClick={() => scrollToSection(0)}
@@ -350,27 +350,26 @@ const App: React.FC = () => {
             ) : (
               <div className={`max-w-6xl w-full flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-16 items-center page-content z-10`}>
                 <div className="w-full md:w-1/2 relative group">
-                   <div className="bg-white p-5 shadow-2xl rotate-1 transform group-hover:rotate-0 transition-transform duration-700 rounded-sm hover:scale-[1.03]">
-                     <img src={m.imageUrl} className="w-full h-[350px] md:h-[480px] object-cover rounded-sm" alt={m.title} />
-                     <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-48 h-12 bg-white/70 backdrop-blur-md rotate-[-1deg] border border-black/5 flex items-center justify-center shadow-sm">
-                        <span className="text-[9px] uppercase tracking-widest font-black opacity-40">Memorias de {m.date}</span>
-                     </div>
-                   </div>
+                    <div className="bg-white p-5 shadow-2xl rotate-1 transform group-hover:rotate-0 transition-transform duration-700 rounded-sm hover:scale-[1.03]">
+                      <img src={m.imageUrl} className="w-full h-[350px] md:h-[480px] object-cover rounded-sm" alt={m.title} />
+                      <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-48 h-12 bg-white/70 backdrop-blur-md rotate-[-1deg] border border-black/5 flex items-center justify-center shadow-sm">
+                      </div>
+                    </div>
                 </div>
                 <div className="w-full md:w-1/2 space-y-6 p-10 border-l-4 bg-white/20 backdrop-blur-sm shadow-sm rounded-r-xl transition-all hover:bg-white/30" style={{ borderLeftColor: theme.accent }}>
-                   <div className="flex items-center gap-4">
-                     <span className="text-[10px] font-black tracking-[0.4em] uppercase opacity-70" style={{ color: theme.accent }}>Etapa {idx + 1}: {m.stage}</span>
-                     <div className="flex-1 h-px bg-black/5"></div>
-                   </div>
-                   <h2 className="font-serif text-5xl md:text-6xl" style={{ color: theme.text }}>{m.title}</h2>
-                   <p className="font-handwriting text-3xl leading-snug text-gray-700 opacity-90">
-                     {m.description}
-                   </p>
-                   {!isPlaying && (
-                     <div className="pt-10">
+                    <div className="flex items-center gap-4">
+                      <span className="text-[10px] font-black tracking-[0.4em] uppercase opacity-70" style={{ color: theme.accent }}>Etapa {idx + 1}: {m.stage}</span>
+                      <div className="flex-1 h-px bg-black/5"></div>
+                    </div>
+                    <h2 className="font-serif text-5xl md:text-6xl" style={{ color: theme.text }}>{m.title}</h2>
+                    <p className="font-handwriting text-3xl leading-snug text-gray-700 opacity-90">
+                      {m.description}
+                    </p>
+                    {!isPlaying && (
+                      <div className="pt-10">
                         <AnimatedLyrics text={m.phrase} color={theme.accent} />
-                     </div>
-                   )}
+                      </div>
+                    )}
                 </div>
                 <div className="page-shadow"></div>
               </div>
