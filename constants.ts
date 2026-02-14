@@ -34,7 +34,7 @@ export const MILESTONES: Milestone[] = [
     title: 'La decisión...',
     description: 'Un día el cariño se transformó y decidimos caminar de la mano. Dejamos de ser mejores amigos para convertirnos en el amor de nuestra vida"',
     phrase: "If the party was over and our time on Earth was through...",
-    imageUrl: ['2.jpeg', '6.jpeg'],
+    imageUrl: ['./2.jpeg', './6.jpeg'],
     theme: {
       bg: '#FDF2F7', 
       accent: '#D97B93', 
