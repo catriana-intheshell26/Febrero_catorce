@@ -15,7 +15,6 @@ export default defineConfig({
   
   resolve: {
     alias: {
-      // Esto permite usar @ para referirse a la raíz del proyecto
       '@': path.resolve(__dirname, '.'),
     }
   }
