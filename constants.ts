@@ -63,7 +63,7 @@ export const MILESTONES: Milestone[] = [
     title: 'Juntos en cada paso...',
     description: 'Planear una vida juntos fue el paso más natural. Decidimos unir nuestros manos bajo un mismo cielo y empezamos a soñar en grande.',
     phrase: "And die with a smile...",
-    imageUrl: 'https://images.unsplash.com/photo-1494972308845-d171197eaa97?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/8.jpeg',
     theme: {
       bg: '#ece0fa', 
       accent: '#9643f5', 
@@ -78,7 +78,7 @@ export const MILESTONES: Milestone[] = [
     title: 'Amor hecho Vida',
     description: 'Lo soñamos, lo planeamos y finalmente llegó. Nuestra hija es el reflejo de nuestro amor. Hoy, ser sus padres es nuestra misión más importante.',
     phrase: "Right next to you...",
-    imageUrl: 'https://images.unsplash.com/photo-1511733849282-589d29a6b28a?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/14.jpeg',
     theme: {
       bg: '#F0F7FA', 
       accent: '#2A9D8F', 

@@ -273,7 +273,7 @@ const App: React.FC = () => {
                         </h1>
                       </div>
                       
-                      <p className="font-handwriting text-3xl md:text-2xl text-gray-600 leading-relaxed italic relative">
+                      <p className="font-handwriting text-xl md:text-2xl text-gray-600 leading-relaxed italic relative">
                         <span className="absolute -left-6 top-0 text-6xl text-gray-200 font-serif">"</span>
                         {m.description}
                       </p>
@@ -306,7 +306,6 @@ const App: React.FC = () => {
               <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center page-content z-10">
                 <div className="space-y-8">
                   <div className="space-y-2">
-                    <span className="font-bold uppercase tracking-[0.5em] text-xs opacity-60" style={{ color: theme.accent }}>Etapa II: {m.stage}</span>
                     <h2 className="font-serif text-5xl md:text-7xl">{m.title.split(' ')[0]} <span style={{ color: theme.accent }}>{m.title.split(' ').slice(1).join(' ')}</span></h2>
                   </div>
                   <p className="text-xl text-gray-700 leading-relaxed font-light italic bg-white/50 backdrop-blur-md p-6 rounded-lg shadow-sm border border-white/40 transition-all hover:bg-white/70">
@@ -314,7 +313,7 @@ const App: React.FC = () => {
                   </p>
                   <div className="flex items-center gap-6">
                       <div className="w-16 h-[1px]" style={{ backgroundColor: theme.accent }}></div>
-                      <p className="font-handwriting text-3xl" style={{ color: theme.accent }}>El viaje floreció aquí</p>
+                      <p className="font-handwriting text-xl" style={{ color: theme.accent }}>El viaje floreció aquí</p>
                   </div>
                 </div>
                 <EncounterMap isActive={activeIndex === 1} photoUrl={m.imageUrl} />
@@ -322,13 +321,13 @@ const App: React.FC = () => {
               </div>
             ) : isFinal ? (
               <div className="max-w-2xl space-y-12 z-10 page-content text-center">
-                <div className="space-y-4">
-                  <span className="text-[14px] uppercase tracking-[0.6em] opacity-90" style={{ color: theme.accent }}>Que suerte la mía de encontrarte a tí.</span>
-                  <h2 className="font-serif text-7xl md:text-[10rem] italic" style={{ color: theme.text }}>
-                    Eres mi <span style={{ color: theme.accent }}>Vida</span>
+                <div className=" flex flex-col items-center">
+                  <span className="text-[12px] uppercase tracking-[0.6em] opacity-90 block mb-4" style={{ color: theme.accent }}>Que suerte la mía de encontrarte a tí.</span>
+                  <h2 className="font-serif text-6xl md:text-[7rem] italic " style={{ color: theme.text }}>
+                    Eres mi <span className="block md:inline" style={{ color: theme.accent }}>Vida</span>
                   </h2>
                 </div>
-                <p className="font-handwriting text-2xl md:text-5xl leading-relaxed max-w-3xl mx-auto" style={{ color: theme.text }}>
+                <p className="font-handwriting text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto" style={{ color: theme.text }}>
                   {m.description}
                 </p>
                 <div className="relative py-12">
@@ -342,7 +341,7 @@ const App: React.FC = () => {
                   className="group relative px-16 py-6 overflow-hidden rounded-full border transition-all shadow-2xl active:scale-95"
                   style={{ borderColor: theme.accent }}
                 >
-                  <span className="relative z-10 transition-colors uppercase text-xs tracking-[0.4em] font-black group-hover:text-white" style={{ color: theme.accent }}>Volver al Primer Puerto</span>
+                  <span className="relative z-10 transition-colors uppercase text-xs tracking-[0.4em] font-black group-hover:text-white" style={{ color: theme.accent }}>Volver al Inicio</span>
                   <div className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-700" style={{ backgroundColor: theme.accent }}></div>
                 </button>
                 <div className="page-shadow"></div>
@@ -358,11 +357,10 @@ const App: React.FC = () => {
                 </div>
                 <div className="w-full md:w-1/2 space-y-6 p-10 border-l-4 bg-white/20 backdrop-blur-sm shadow-sm rounded-r-xl transition-all hover:bg-white/30" style={{ borderLeftColor: theme.accent }}>
                     <div className="flex items-center gap-4">
-                      <span className="text-[10px] font-black tracking-[0.4em] uppercase opacity-70" style={{ color: theme.accent }}>Etapa {idx + 1}: {m.stage}</span>
                       <div className="flex-1 h-px bg-black/5"></div>
                     </div>
                     <h2 className="font-serif text-5xl md:text-6xl" style={{ color: theme.text }}>{m.title}</h2>
-                    <p className="font-handwriting text-3xl leading-snug text-gray-700 opacity-90">
+                    <p className="font-handwriting text-xl leading-snug text-gray-700 opacity-90">
                       {m.description}
                     </p>
                     {!isPlaying && (
